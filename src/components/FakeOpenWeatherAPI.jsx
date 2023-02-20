@@ -3,9 +3,11 @@ import {OPEN_WEATHER_API_KEY} from '../../config.js';
 import {InputForm} from './InputForm.jsx';
 import {Loader} from './Loader';
 
+// TODO можно использовать обратный гео для вывода города рядом с температурой
+
 export function FakeOpenWeatherAPI() {
   const [isLoading, setIsLoading] = useState(false);
-  const [temp, setTemp] = useState('');
+  const [weatherInfo, setWeatherInfo] = useState('');
   const [value, setValue] = useState('');
 
   useEffect(() => getWeather('Moscow'), [value]);
@@ -16,39 +18,44 @@ export function FakeOpenWeatherAPI() {
     return fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${OPEN_WEATHER_API_KEY}`)
         .then(res => res.json())
         .then(data => {
-          console.log(data.lat, data.lon);
+          console.log(data[0].lat, data[0].lon);
           setIsLoading(false);
-          return [data.lat, data.lon];
+          return [data[0].lat, data[0].lon];
         })
-        .catch(console.error);
+        .catch(err => {
+          alert(err);
+          setIsLoading(false);
+        });
   }
 
   function getGeoWeather(lat, lon) {
     setIsLoading(true);
 
-    return fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_API_KEY}`)
+    return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${OPEN_WEATHER_API_KEY}`)
         .then(res => res.json())
         .then(data => {
-          setTemp(data.temp);
+          setWeatherInfo(data.main);
           setIsLoading(false);
-          return temp;
+          return weatherInfo;
         })
-        .catch(console.error);
+        .catch(err => {
+          alert(err);
+          setIsLoading(false);
+        });
   }
 
-  // TODO refactor in pure function
   function getWeather(cityName) {
     getCityGeo(cityName)
         .then(([lat, lon]) => getGeoWeather(lat, lon))
-        .then((temp) => {
+        .then((weather) => {
           console.log('getWeather resolved');
-          setValue(temp);
-        });
+          setValue(weather);
+        })
   }
 
   return (
       <div>
-        {isLoading ? <Loader /> : <p>{temp}</p>}
+        {isLoading ? <Loader /> : <p>{weatherInfo.cityName}: {weatherInfo.temp} °C</p>}
         <InputForm getWeather={getWeather} />
       </div>
   );

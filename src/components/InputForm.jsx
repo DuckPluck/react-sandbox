@@ -23,9 +23,7 @@ export class InputForm extends React.Component {
                 type="search"
                 value={this.state.search}
 
-                onChange={e => {
-                  this.setState({search: e.target.value});
-                  this.getWeather(this.state.search); }}
+                onChange={e => this.setState({search: e.target.value})}
 
                 onKeyDown={this.handleKey} />
           </div>
