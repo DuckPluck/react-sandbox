@@ -6,13 +6,12 @@ export class InputForm extends React.Component {
     this.state = {search: 'Moscow'}
   }
 
-  searchCity = (str) => {
-    // fetch(url)
-  }
+  getWeather = this.props.getWeather
 
   handleKey = (e) => {
     if (e.key === 'Enter') {
-
+      this.setState({search: e.target.value});
+      this.getWeather(this.state.search);
     }
   }
 
@@ -23,7 +22,11 @@ export class InputForm extends React.Component {
             <input
                 type="search"
                 value={this.state.search}
-                onChange={e => this.setState({search: e.target.value})}
+
+                onChange={e => {
+                  this.setState({search: e.target.value});
+                  this.getWeather(this.state.search); }}
+
                 onKeyDown={this.handleKey} />
           </div>
         </>

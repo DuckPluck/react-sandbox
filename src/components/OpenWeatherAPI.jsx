@@ -1,41 +1,64 @@
 import React from 'react';
 import {OPEN_WEATHER_API_KEY} from '../../config.js';
+import {InputForm} from './InputForm.jsx';
+import {Loader} from './Loader';
 
 export class OpenWeatherAPI extends React.Component {
-  lat = 15
-
   constructor(props) {
     super(props);
     this.state = {};
   }
-  async componentDidMount() {
-    // TODO: make input form for search!!
-    // TODO: input cityName
+
+  componentDidMount() {
+    // TODO: refactor fetch with useEffect
     // TODO: (optional) add `q=${cityName},${stateCode},${countryCode}` in url
-    // TODO: loader
     // TODO: form filter
     // TODO: HOOKS (useEffect, useContext, Reducer)
     // TODO: routing
+    this.getWeather('Moscow');
+  }
 
-    await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=Moscow&appid=${OPEN_WEATHER_API_KEY}`)
+  getCityGeo = (cityName) => {
+    this.setState({isLoading: true});
+    return fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${OPEN_WEATHER_API_KEY}`)
+  };
+
+  getGeoWeather = (lat, lon) => {
+    this.setState({isLoading: true});
+    return fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_API_KEY}`)
+  };
+
+  getWeather = (cityName) => {
+    console.log('first');
+    this.getCityGeo(cityName)
         .then((res) => res.json())
         .then(data => {
-          this.setState({...data[0]});
+          this.setState({
+            isLoading: false,
+            lat: data.lat,
+            lon: data.lon,
+          });
+          console.log('getCityGeo resolved', this.state.lat, this.state.lon);
+          return [data.lat, data.lon];
         })
-
-
-    fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${this.state.lat}&lon=${this.state.lon}&appid=${OPEN_WEATHER_API_KEY}`)
-        .then(res => res.json())
-        .then(data => {
-          this.setState({...data});
-          console.log(this.state);
-        })
-  }
+        .then(([lat, lon]) => {
+          console.log('second');
+          this.getGeoWeather(lat, lon)
+              .then(res => res.json())
+              .then(data => {
+                this.setState({isLoading: false});
+                console.log('getGeoWeather resolved');
+                return data.temp;
+              })
+              .then(() => console.log('getWeather resolved'));
+        });
+  };
 
   render() {
     return (
         <div>
-          погода
+          {this.state.isLoading ? <Loader /> : <p>this.state.data.temp</p>}
+          <InputForm getWeather={this.getWeather} />
         </div>
     );
   }
