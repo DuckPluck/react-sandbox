@@ -7,7 +7,8 @@ import {Loader} from './Loader';
 
 export function FakeOpenWeatherAPI() {
   const [isLoading, setIsLoading] = useState(false);
-  const [weatherInfo, setWeatherInfo] = useState('');
+  const [mainInfo, setMainInfo] = useState('');
+  const [cityName, setCityName] = useState('');
   const [value, setValue] = useState('');
 
   useEffect(() => getWeather('Moscow'), [value]);
@@ -28,15 +29,25 @@ export function FakeOpenWeatherAPI() {
         });
   }
 
+  function getGeoFromCity(lat, lon) {
+    setIsLoading(true);
+    return fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_API_KEY}`)
+        .then(res => res.json())
+        .then(data => {
+          setIsLoading(false);
+          return data[0].name;
+        });
+  }
+
   function getGeoWeather(lat, lon) {
     setIsLoading(true);
 
     return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${OPEN_WEATHER_API_KEY}`)
         .then(res => res.json())
         .then(data => {
-          setWeatherInfo(data.main);
+          setMainInfo(data.main);
           setIsLoading(false);
-          return weatherInfo;
+          return mainInfo;
         })
         .catch(err => {
           alert(err);
@@ -46,16 +57,21 @@ export function FakeOpenWeatherAPI() {
 
   function getWeather(cityName) {
     getCityGeo(cityName)
-        .then(([lat, lon]) => getGeoWeather(lat, lon))
+        .then(([lat, lon]) => {
+          getGeoFromCity(lat, lon).then(name => {
+            setCityName(name);
+          })
+          return getGeoWeather(lat, lon);
+        })
         .then((weather) => {
           console.log('getWeather resolved');
           setValue(weather);
-        })
+        });
   }
 
   return (
       <div>
-        {isLoading ? <Loader /> : <p>{weatherInfo.cityName}: {weatherInfo.temp} °C</p>}
+        {isLoading ? <Loader /> : <p>{cityName}: {mainInfo.temp} °C</p>}
         <InputForm getWeather={getWeather} />
       </div>
   );
