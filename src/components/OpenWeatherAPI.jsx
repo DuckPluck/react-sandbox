@@ -1,65 +1,65 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {OPEN_WEATHER_API_KEY} from '../../config.js';
-import {InputForm} from './InputForm.jsx';
+import {OpenWeatherInputForm} from './OpenWeatherInputForm.jsx';
 import {Loader} from './Loader';
 
-export class OpenWeatherAPI extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+// TODO: HOOKS (useContext, Reducer)
+// TODO: routing
 
-  componentDidMount() {
-    // TODO: refactor fetch with useEffect
-    // TODO: (optional) add `q=${cityName},${stateCode},${countryCode}` in url
-    // TODO: form filter
-    // TODO: HOOKS (useEffect, useContext, Reducer)
-    // TODO: routing
-    this.getWeather('Moscow');
-  }
+export function OpenWeatherAPI() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [mainInfo, setMainInfo] = useState('');
+  const [cityName, setCityName] = useState('');
+  const [value, setValue] = useState('');
 
-  getCityGeo = (cityName) => {
-    this.setState({isLoading: true});
+  useEffect(() => getWeather('Moscow'), [value]);
+
+  function getCityGeo(cityName) {
+    setIsLoading(true);
+
     return fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${OPEN_WEATHER_API_KEY}`)
-  };
-
-  getGeoWeather = (lat, lon) => {
-    this.setState({isLoading: true});
-    return fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_API_KEY}`)
-  };
-
-  getWeather = (cityName) => {
-    console.log('first');
-    this.getCityGeo(cityName)
-        .then((res) => res.json())
+        .then(res => res.json())
         .then(data => {
-          this.setState({
-            isLoading: false,
-            lat: data.lat,
-            lon: data.lon,
-          });
-          console.log('getCityGeo resolved', this.state.lat, this.state.lon);
-          return [data.lat, data.lon];
+          setIsLoading(false);
+          setCityName(data[0].name)
+          return [data[0].lat, data[0].lon];
         })
-        .then(([lat, lon]) => {
-          console.log('second');
-          this.getGeoWeather(lat, lon)
-              .then(res => res.json())
-              .then(data => {
-                this.setState({isLoading: false});
-                console.log('getGeoWeather resolved');
-                return data.temp;
-              })
-              .then(() => console.log('getWeather resolved'));
+        .catch(err => {
+          alert(err);
+          setIsLoading(false);
         });
-  };
-
-  render() {
-    return (
-        <div>
-          {this.state.isLoading ? <Loader /> : <p>this.state.data.temp</p>}
-          <InputForm getWeather={this.getWeather} />
-        </div>
-    );
   }
+
+  function getGeoWeather(lat, lon) {
+    setIsLoading(true);
+
+    return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${OPEN_WEATHER_API_KEY}`)
+        .then(res => res.json())
+        .then(data => {
+          setMainInfo(data.main);
+          setIsLoading(false);
+          return mainInfo;
+        })
+        .catch(err => {
+          alert(err);
+          setIsLoading(false);
+        });
+  }
+
+  function getWeather(cityName) {
+    getCityGeo(cityName)
+        .then(([lat, lon]) => {
+          return getGeoWeather(lat, lon);
+        })
+        .then((weather) => {
+          setValue(weather);
+        });
+  }
+
+  return (
+      <div className='weather-container'>
+        {isLoading ? <Loader /> : <p>{cityName}: {mainInfo.temp} °C</p>}
+        <OpenWeatherInputForm getWeather={getWeather} />
+      </div>
+  );
 }

@@ -6,12 +6,12 @@ export function ButtonClickCounterFunc() {
 
   function handleClick(e) {
     useCounter(counter + 1);
-    console.log(counter);
+    console.log(counter + 1, 'left button');
   }
 
   return (
       <div>
-        <button onClick={handleClick}>Click me!</button>
+        <button onClick={handleClick}>{counter}</button>
       </div>
   );
 }

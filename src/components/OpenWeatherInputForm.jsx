@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class InputForm extends React.Component {
+export class OpenWeatherInputForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {search: 'Moscow'}
@@ -22,9 +22,7 @@ export class InputForm extends React.Component {
             <input
                 type="search"
                 value={this.state.search}
-
                 onChange={e => this.setState({search: e.target.value})}
-
                 onKeyDown={this.handleKey} />
           </div>
         </>

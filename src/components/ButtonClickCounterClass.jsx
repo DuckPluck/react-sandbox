@@ -12,13 +12,13 @@ export class ButtonClickCounterClass extends React.Component {
     this.setState({
         counter: this.state.counter + 1,
     });
-    console.log(this.state.counter);
+    console.log(this.state.counter + 1, 'right button');
   }
 
   render() {
     return (
         <div>
-          <button onClick={this.handleClick}>Click me!</button>
+          <button onClick={this.handleClick}>{this.state.counter}</button>
         </div>
     );
   }

@@ -5,17 +5,16 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.container {
+    display: flex;
+    flex-flow: column;
+    gap: 7vh;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+.counter-container {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-evenly;
 }
 
 @keyframes logo-spin {
