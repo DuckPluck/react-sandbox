@@ -3,16 +3,12 @@ import {OPEN_WEATHER_API_KEY} from '../../config.js';
 import {OpenWeatherInputForm} from './OpenWeatherInputForm.jsx';
 import {Loader} from './Loader';
 
-// TODO: HOOKS (useContext, Reducer)
-// TODO: routing
-
 export function OpenWeatherAPI() {
   const [isLoading, setIsLoading] = useState(false);
   const [mainInfo, setMainInfo] = useState('');
   const [cityName, setCityName] = useState('');
-  const [value, setValue] = useState('');
 
-  useEffect(() => getWeather('Moscow'), [value]);
+  useEffect(() => getWeather('Moscow'), []);
 
   function getCityGeo(cityName) {
     setIsLoading(true);
@@ -38,6 +34,7 @@ export function OpenWeatherAPI() {
         .then(data => {
           setMainInfo(data.main);
           setIsLoading(false);
+          console.log(cityName);
           return mainInfo;
         })
         .catch(err => {
@@ -51,8 +48,9 @@ export function OpenWeatherAPI() {
         .then(([lat, lon]) => {
           return getGeoWeather(lat, lon);
         })
-        .then((weather) => {
-          setValue(weather);
+        .then(() => {
+          console.log(`Weather in ${cityName} is ${mainInfo.temp} °C`);
+          console.log(mainInfo);
         });
   }
 

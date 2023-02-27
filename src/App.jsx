@@ -3,7 +3,7 @@ import './App.css';
 import {ButtonClickCounterClass} from './components/ButtonClickCounterClass.jsx';
 import {ButtonClickCounterFunc} from './components/ButtonClickCounterFunc.jsx';
 import {OpenWeatherAPI} from './components/OpenWeatherAPI.jsx';
-import {TimerInputForm} from './components/TimerInputForm';
+import {Timer} from './components/Timer.jsx';
 
 export function App() {
   return (
@@ -13,10 +13,14 @@ export function App() {
             <ButtonClickCounterFunc />
             <ButtonClickCounterClass />
           </div>
-          {/*<OpenWeatherAPI />*/}
-          <TimerInputForm />
+          <OpenWeatherAPI />
+          <Timer />
         </div>
       </>
 
   );
 }
+
+// TODO: HOOKS (useContext, Reducer)
+// TODO: routing
+// TODO: потыкать аккаунты firebase
