@@ -21,6 +21,7 @@ export function App() {
   );
 }
 
+// TODO: конспект context
 // TODO: HOOKS (useContext, Reducer)
 // TODO: routing
 // TODO: потыкать аккаунты firebase
