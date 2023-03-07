@@ -9,6 +9,11 @@ export function OpenWeatherAPI() {
   const [cityName, setCityName] = useState('');
 
   useEffect(() => getWeather('Moscow'), []);
+  useEffect(() => {
+    if (mainInfo) {
+      console.log(`Weather in ${cityName} is ${mainInfo.temp} °C`);
+    }
+  }, [mainInfo])
 
   function getCityGeo(cityName) {
     setIsLoading(true);
@@ -17,7 +22,7 @@ export function OpenWeatherAPI() {
         .then(res => res.json())
         .then(data => {
           setIsLoading(false);
-          setCityName(data[0].name)
+          setCityName(data[0].name);
           return [data[0].lat, data[0].lon];
         })
         .catch(err => {
@@ -34,7 +39,6 @@ export function OpenWeatherAPI() {
         .then(data => {
           setMainInfo(data.main);
           setIsLoading(false);
-          console.log(cityName);
           return mainInfo;
         })
         .catch(err => {
@@ -44,18 +48,11 @@ export function OpenWeatherAPI() {
   }
 
   function getWeather(cityName) {
-    getCityGeo(cityName)
-        .then(([lat, lon]) => {
-          return getGeoWeather(lat, lon);
-        })
-        .then(() => {
-          console.log(`Weather in ${cityName} is ${mainInfo.temp} °C`);
-          console.log(mainInfo);
-        });
+    getCityGeo(cityName).then(([lat, lon]) => getGeoWeather(lat, lon));
   }
 
   return (
-      <div className='weather-container'>
+      <div className="weather-container">
         {isLoading ? <Loader /> : <p>{cityName}: {mainInfo.temp} °C</p>}
         <OpenWeatherInputForm getWeather={getWeather} />
       </div>
