@@ -9,6 +9,7 @@
     display: flex;
     flex-flow: column;
     gap: 7vh;
+    min-width: 400px;
 }
 
 .counter-container {
