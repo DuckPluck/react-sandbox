@@ -18,6 +18,19 @@
     justify-content: space-evenly;
 }
 
+.border-box {
+    border: 1px solid rgb(79, 214, 88);
+    padding: 5px;
+}
+
+.border-box button {
+    margin-bottom: 10px;
+}
+
+.border-box p {
+    margin: 25px;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

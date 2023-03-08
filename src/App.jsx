@@ -5,11 +5,13 @@ import {ButtonClickCounterFunc} from './components/ButtonClickCounterFunc.jsx';
 import {OpenWeatherAPI} from './components/OpenWeatherAPI.jsx';
 import {Timer} from './components/Timer.jsx';
 import {Context} from '../context.js';
-import {ContextReceiver} from './components/ContextReceiver';
+import {ContextParent} from './components/ContextReceiver';
+
 
 export function App() {
   const [ctx, setCtx] = useState({
-    text: 'Context has been received',
+    isMemo: false,
+    title: 'Context receiver',
     value: 'Do update',
     setValue: () => {
     },
@@ -20,23 +22,27 @@ export function App() {
   return (
       <>
         <div className="container">
+
           <div className="counter-container">
             <ButtonClickCounterFunc />
             <ButtonClickCounterClass />
           </div>
+
           <OpenWeatherAPI />
+
           <Timer />
+
           <Context.Provider value={value}>
-            <ContextReceiver />
+            <ContextParent/>
           </Context.Provider>
+
         </div>
       </>
-
   );
 }
 
-
-// TODO: HOOKS (useContext, Reducer)
+// TODO: useMemo (надо еще сделать чтобы по кнопке включался и выключался)
+// TODO: Reducer
 // TODO: итерировать компоненты (список)
 // TODO: refs
 // TODO: routing
