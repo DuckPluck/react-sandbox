@@ -6,6 +6,7 @@ import {OpenWeatherAPI} from './components/OpenWeatherAPI.jsx';
 import {Timer} from './components/Timer.jsx';
 import {Context} from '../context.js';
 import {ContextParent} from './components/ContextReceiver';
+import {ReducerReceiver} from './components/ReducerReceiver';
 
 
 export function App() {
@@ -36,12 +37,12 @@ export function App() {
             <ContextParent/>
           </Context.Provider>
 
+          <ReducerReceiver/>
         </div>
       </>
   );
 }
 
-// TODO: useMemo (надо еще сделать чтобы по кнопке включался и выключался)
 // TODO: Reducer
 // TODO: итерировать компоненты (список)
 // TODO: refs
