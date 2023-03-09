@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import './App.css';
-import {ButtonClickCounterClass} from './components/ButtonClickCounterClass.jsx';
-import {ButtonClickCounterFunc} from './components/ButtonClickCounterFunc.jsx';
+import {ButtonClickCounterFunc, ButtonClickCounterClass} from './components/ButtonClickCounter.jsx';
 import {OpenWeatherAPI} from './components/OpenWeatherAPI.jsx';
 import {Timer} from './components/Timer.jsx';
 import {Context} from '../context.js';
 import {ContextParent} from './components/ContextReceiver';
 import {ReducerReceiver} from './components/ReducerReceiver';
+import {ButtonList} from './components/ButtonList.jsx';
 
 
 export function App() {
@@ -24,27 +24,23 @@ export function App() {
       <>
         <div className="container">
 
-          <div className="counter-container">
-            <ButtonClickCounterFunc />
-            <ButtonClickCounterClass />
-          </div>
+          <ButtonList />
 
           <OpenWeatherAPI />
 
           <Timer />
 
           <Context.Provider value={value}>
-            <ContextParent/>
+            <ContextParent />
           </Context.Provider>
 
-          <ReducerReceiver/>
+          <ReducerReceiver />
+
         </div>
       </>
   );
 }
 
-// TODO: Reducer
-// TODO: итерировать компоненты (список)
 // TODO: refs
 // TODO: routing
 // TODO: потыкать аккаунты firebase

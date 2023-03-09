@@ -9,7 +9,7 @@
     display: flex;
     flex-flow: column;
     gap: 7vh;
-    min-width: 400px;
+    min-width: 430px;
 }
 
 .counter-container {
@@ -29,6 +29,10 @@
 
 .border-box p {
     margin: 25px;
+}
+
+button.btn-class:hover {
+    border-color: #d364ff;
 }
 
 @keyframes logo-spin {

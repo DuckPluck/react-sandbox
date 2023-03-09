@@ -21,11 +21,11 @@ export function reducer(state, action) {
       return {...state, value: state.value - 1};
 
     case ACTIONS.MULTIPLY:
-      console.log(`Reducer: value is multiplied by 1`);
+      console.log(`Reducer: value is multiplied by 2`);
       return {...state, value: state.value * 2};
 
     case ACTIONS.DIVIDE:
-      console.log(`Reducer: value is divided by 1`);
+      console.log(`Reducer: value is divided by 2`);
       return {...state, value: state.value / 2};
 
     default: throw new Error('Reducer error')
