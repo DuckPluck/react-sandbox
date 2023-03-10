@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import './App.css';
-import {ButtonClickCounterFunc, ButtonClickCounterClass} from './components/ButtonClickCounter.jsx';
 import {OpenWeatherAPI} from './components/OpenWeatherAPI.jsx';
 import {Timer} from './components/Timer.jsx';
 import {Context} from '../context.js';

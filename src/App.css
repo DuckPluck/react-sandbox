@@ -9,13 +9,14 @@
     display: flex;
     flex-flow: column;
     gap: 7vh;
-    min-width: 430px;
+    width: 430px;
 }
 
 .counter-container {
     display: flex;
     flex-flow: row;
     justify-content: space-evenly;
+
 }
 
 .border-box {

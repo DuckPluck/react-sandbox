@@ -25,7 +25,7 @@ export function ContextParent() {
 
 
 export function ContextBroker() {
-  useEffect(() => console.log('Context Broker rendered'));
+  useEffect(() => console.log('Context Broker rendered (!)'));
   return (
       <div className='border-box'>
         <p>Context broker</p>

@@ -6,23 +6,21 @@ export function ButtonList() {
   const [update, setUpdate] = useState(0)
 
   function handleListFunc() {
-    buttons.push(<ButtonClickCounterFunc lassName='btn-func'/>);
+    buttons.push(<ButtonClickCounterFunc />);
     setUpdate(update + 1);
-    console.log(buttons);
   }
 
   function handleListClass() {
-    buttons.push(<ButtonClickCounterClass lassName='btn-class'/>);
+    buttons.push(<ButtonClickCounterClass />);
     setUpdate(update + 1);
-    console.log(buttons);
   }
 
   return (
       <div className='counter-container'>
         {
-          buttons.map((btn) => btn.type.name === 'ButtonClickCounterFunc'
-              ? <ButtonClickCounterFunc handleListFunc={handleListFunc}/>
-              : <ButtonClickCounterClass handleListClass={handleListClass}/>
+          buttons.map((btn, i) => btn.type.name === 'ButtonClickCounterFunc'
+              ? <ButtonClickCounterFunc key={i} handleListFunc={handleListFunc}/>
+              : <ButtonClickCounterClass key={i} handleListClass={handleListClass}/>
           )
         }
       </div>
