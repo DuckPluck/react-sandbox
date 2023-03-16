@@ -3,7 +3,7 @@ import {ButtonClickCounterClass, ButtonClickCounterFunc, buttons} from './Button
 
 
 export function ButtonList() {
-  const [update, setUpdate] = useState(0)
+  const [update, setUpdate] = useState(0);
 
   function handleListFunc() {
     buttons.push(<ButtonClickCounterFunc />);
@@ -16,14 +16,18 @@ export function ButtonList() {
   }
 
   return (
-      <div className='counter-container'>
-        {
-          buttons.map((btn, i) => btn.type.name === 'ButtonClickCounterFunc'
-              ? <ButtonClickCounterFunc key={i} handleListFunc={handleListFunc}/>
-              : <ButtonClickCounterClass key={i} handleListClass={handleListClass}/>
-          )
-        }
-      </div>
+      <>
+        <div className="counter-container">
+          {
+            buttons.map((btn, i) => btn.type.name === 'ButtonClickCounterFunc'
+                ? <ButtonClickCounterFunc key={i} handleListFunc={handleListFunc} />
+                : <ButtonClickCounterClass key={i} handleListClass={handleListClass} />
+            )
+          }
+
+        </div>
+        <hr />
+      </>
   );
 }
 

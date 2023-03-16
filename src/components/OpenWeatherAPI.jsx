@@ -52,9 +52,12 @@ export function OpenWeatherAPI() {
   }
 
   return (
+      <>
       <div className="weather-container">
         {isLoading ? <Loader /> : <p>{cityName}: {mainInfo.temp} °C</p>}
         <OpenWeatherInputForm getWeather={getWeather} />
       </div>
+      <hr />
+      </>
   );
 }

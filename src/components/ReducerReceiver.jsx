@@ -5,6 +5,7 @@ export function ReducerReceiver() {
   const [state, dispatch] = useReducer(reducer, initState);
 
   return (
+      <>
       <div>
         <p>Reducer state is: {state.value}</p>
         <button onClick={() => dispatch({type: ACTIONS.INCREMENT})}>+ 1</button>
@@ -12,5 +13,7 @@ export function ReducerReceiver() {
         <button onClick={() => dispatch({type: ACTIONS.MULTIPLY})}>* 2</button>
         <button onClick={() => dispatch({type: ACTIONS.DIVIDE})}>/ 2</button>
       </div>
+      <hr />
+      </>
   );
 }

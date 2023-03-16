@@ -43,6 +43,7 @@ export function Timer(props) {
   }, [time, isStarted])
 
     return (
+        <>
         <div className="timer-container">
           <p>{time}</p>
           <input
@@ -54,5 +55,7 @@ export function Timer(props) {
           <button onClick={handleKey}>{isStarted ? 'Stop timer' : 'Start timer'}</button>
           <button onClick={handleStatus}>Status</button>
         </div>
+        <hr />
+        </>
     );
   }

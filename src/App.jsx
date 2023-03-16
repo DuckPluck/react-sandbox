@@ -6,6 +6,7 @@ import {Context} from '../context.js';
 import {ContextParent} from './components/ContextReceiver';
 import {ReducerReceiver} from './components/ReducerReceiver';
 import {ButtonList} from './components/ButtonList.jsx';
+import {RefTextClass, RefTextFunc} from './components/RefText';
 
 
 export function App() {
@@ -34,6 +35,9 @@ export function App() {
           </Context.Provider>
 
           <ReducerReceiver />
+
+          <RefTextClass />
+          <RefTextFunc />
 
         </div>
       </>

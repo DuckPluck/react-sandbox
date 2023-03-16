@@ -14,12 +14,16 @@ export function ContextParent() {
   }
 
   return (
+      <>
       <div className='border-box'>
         <p>Context Parent</p>
-        <button onClick={memoHandler}>memo Context broker is {ctx.isMemo ? 'on' : 'off'}</button>
         {ctx.isMemo ? <ContextBrokerMemo/> : <ContextBroker/>}
+        <p>Now we can disallow rerender for Context broker:</p>
+        <button onClick={memoHandler}>memo is {ctx.isMemo ? 'on' : 'off'}</button>
 
       </div>
+      <hr />
+      </>
   );
 }
 
@@ -27,7 +31,7 @@ export function ContextParent() {
 export function ContextBroker() {
   useEffect(() => console.log('Context Broker rendered (!)'));
   return (
-      <div className='border-box'>
+      <div className='border-box second'>
         <p>Context broker</p>
         <ContextReceiver/>
       </div>
@@ -57,7 +61,7 @@ export function ContextReceiver() {
 
   return (
       <>
-        <div className='border-box'>
+        <div className='border-box third'>
           <p>{ctx.title}</p>
           <p>Context random value: {ctx.value}</p>
           <button onClick={updateHandler}>Update</button>
