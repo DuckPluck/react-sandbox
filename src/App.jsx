@@ -7,6 +7,7 @@ import {ContextParent} from './components/ContextReceiver';
 import {ReducerReceiver} from './components/ReducerReceiver';
 import {ButtonList} from './components/ButtonList.jsx';
 import {RefTextClass, RefTextFunc} from './components/RefText';
+import {WsControl} from './components/WsControl.jsx';
 
 
 export function App() {
@@ -38,6 +39,8 @@ export function App() {
 
           <RefTextClass />
           <RefTextFunc />
+
+          <WsControl />
 
         </div>
       </>
