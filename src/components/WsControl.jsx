@@ -1,9 +1,6 @@
 import React, {useState} from 'react';
 
-const wsMessages = [];
-
 let socket = null;
-
 
 export function WsControl() {
   const [messages, setMessages] = useState([]);
@@ -19,18 +16,12 @@ export function WsControl() {
   }
 
   function handleClear() {
-    wsMessages.length = 0;
-    setMessages([...wsMessages]);
+    setMessages([]);
   }
 
   function handleDisconnect() {
     socket.close();
-    socket.removeEventListener('message', listener);
     setIsConnected(false);
-  }
-
-  const listener = () => {
-    setMessages([...wsMessages]);
   }
 
   function handleConnect() {
@@ -45,7 +36,7 @@ export function WsControl() {
 
     socket.onmessage = function (e) {
       console.log(`Received WS message from server: ${e.data}`);
-      wsMessages.push(e.data);
+      setMessages(prevState => [...prevState, e.data])
     };
 
     socket.onclose = function (e) {
@@ -59,8 +50,6 @@ export function WsControl() {
     socket.onerror = function (e) {
       console.log(`Error type: ${e.title}`);
     };
-
-    socket.addEventListener('message', listener);
 
     setIsConnected(true);
   }
